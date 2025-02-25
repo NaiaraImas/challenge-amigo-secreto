@@ -1,15 +1,58 @@
-// El principal objetivo de este desafío es fortalecer tus habilidades en lógica de programación. Aquí deberás desarrollar la lógica para resolver el problema.
+// Variable (Array) para almacenar nombres: 
 
-// Amigo secreto
-// En este desafío, desarrollarás una aplicación que permita a los usuarios ingresar nombres de amigos en una lista para luego realizar un sorteo aleatorio y determinar quién es el "amigo secreto".
+let amigosAgregados = [];
 
-// El usuario deberá agregar nombres mediante un campo de texto y un botón "Adicionar". Los nombres ingresados se mostrarán en una lista visible en la página, y al finalizar, un botón "Sortear Amigo" seleccionará uno de los nombres de forma aleatoria, mostrando el resultado en pantalla.
+//Función para agregar amigos
 
-// Fucionalidades:
-// Agregar nombres: Los usuarios escribirán el nombre de un amigo en un campo de texto y lo agregarán a una lista visible al hacer clic en "Adicionar".
+function agregarAmigo() {
+    // Capturar el valor del campo de entrada
+    let input = document.getElementById("amigo");
+    let nombre = input.value.trim();
 
-// Validar entrada: Si el campo de texto está vacío, el programa mostrará una alerta pidiendo un nombre válido.
+    // Validar la entrada
+    if (nombre === "") {
+        alert("Por favor, inserte un nombre.");
+        return;
+    }
 
-// Visualizar la lista: Los nombres ingresados aparecerán en una lista debajo del campo de entrada.
+    // Agregar el nombre al array
+    amigosAgregados.push(nombre);
 
-// Sorteo aleatorio: Al hacer clic en el botón "Sortear Amigo", se seleccionará aleatoriamente un nombre de la lista y se mostrará en la página.
+    // Actualizar la lista en el HTML
+    let lista = document.getElementById("listaAmigos");
+    let listItem = document.createElement("li");
+    listItem.textContent = nombre;
+    lista.appendChild(listItem);
+
+    // Limpiar el campo de entrada
+    input.value = "";
+}
+
+function actualizarLista() {
+    let lista = document.getElementById("listaAmigos");
+    lista.innerHTML = ""; // Limpiar la lista existente
+
+    for (let amigo of amigosAgregados) {
+        let listItem = document.createElement("li");
+        listItem.textContent = amigo;
+        lista.appendChild(listItem);
+    }
+}
+
+function sortearAmigo() {
+    // Validar que haya amigos en la lista
+    if (amigosAgregados.length === 0) {
+        alert("No hay amigos para sortear.");
+        return;
+    }
+
+    // Generar un índice aleatorio
+    let indiceAleatorio = Math.floor(Math.random() * amigosAgregados.length);
+
+    // Obtener el nombre sorteado
+    let amigoSorteado = amigosAgregados[indiceAleatorio];
+
+    // Mostrar el resultado en el HTML
+    let resultado = document.getElementById("resultado");
+    resultado.innerHTML = `<li>Amigo Secreto: ${amigoSorteado}</li>`;
+}
